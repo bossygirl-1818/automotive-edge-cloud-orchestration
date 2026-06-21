@@ -5,14 +5,14 @@ import plotly.express as px
 
 def render_energy_analytics():
 
-    df = pd.read_csv("data/rl_reward_history.csv")
+    df = pd.read_csv("data/vehicle_telemetry.csv")
 
     avg_battery = df["battery"].mean()
     max_battery = df["battery"].max()
     min_battery = df["battery"].min()
 
     energy_efficiency = (
-        df[df["battery"] > 40].shape[0] / len(df)
+        df[df["battery"] >= 45].shape[0] / len(df)
     ) * 100
 
     st.markdown(
@@ -26,10 +26,10 @@ def render_energy_analytics():
         st.metric("Avg Battery", f"{avg_battery:.2f}%")
 
     with col2:
-        st.metric("Max Battery", f"{max_battery}%")
+        st.metric("Max Battery", f"{max_battery:.0f}%")
 
     with col3:
-        st.metric("Min Battery", f"{min_battery}%")
+        st.metric("Min Battery", f"{min_battery:.0f}%")
 
     with col4:
         st.metric("Energy Efficiency", f"{energy_efficiency:.2f}%")
@@ -38,7 +38,8 @@ def render_energy_analytics():
         df,
         x="episode",
         y="battery",
-        markers=True
+        markers=False,
+        title="Battery Consumption Trend"
     )
 
     fig.update_layout(
@@ -46,14 +47,16 @@ def render_energy_analytics():
         paper_bgcolor="#020617",
         plot_bgcolor="#020617",
         font=dict(color="#ffffff"),
-        height=430,
+        height=460,
         showlegend=False,
-        margin=dict(l=30, r=30, t=30, b=30)
+        margin=dict(l=30, r=30, t=50, b=30)
     )
 
     fig.update_traces(
-        line=dict(width=4),
-        marker=dict(size=6)
+        line=dict(
+            width=4,
+            color="#38bdf8"
+        )
     )
 
     fig.update_xaxes(

@@ -6,12 +6,12 @@ import plotly.express as px
 def render_latency_analytics():
 
     df = pd.read_csv(
-        "data/rl_reward_history.csv"
+        "data/vehicle_telemetry.csv"
     )
 
-    avg_latency = df["latency"].mean()
-    max_latency = df["latency"].max()
-    min_latency = df["latency"].min()
+    avg_latency = df["network_latency"].mean()
+    max_latency = df["network_latency"].max()
+    min_latency = df["network_latency"].min()
 
     st.markdown(
         '<div class="section-title">⚡ Latency Analytics</div>',
@@ -29,32 +29,48 @@ def render_latency_analytics():
     with col2:
         st.metric(
             "Max Latency",
-            f"{max_latency} ms"
+            f"{max_latency:.0f} ms"
         )
 
     with col3:
         st.metric(
             "Min Latency",
-            f"{min_latency} ms"
+            f"{min_latency:.0f} ms"
         )
 
     fig = px.line(
         df,
         x="episode",
-        y="latency",
-        markers=True
+        y="network_latency",
+        markers=False,
+        title="Network Latency Optimization Over Episodes"
     )
 
     fig.update_layout(
         template="plotly_dark",
         paper_bgcolor="#020617",
         plot_bgcolor="#020617",
-        height=450,
+        font=dict(color="white"),
+        height=500,
+        margin=dict(l=20, r=20, t=50, b=20),
         showlegend=False
     )
 
     fig.update_traces(
-        line=dict(width=4)
+        line=dict(
+            width=4,
+            color="#38bdf8"
+        )
+    )
+
+    fig.update_xaxes(
+        title="Episode",
+        gridcolor="#1e293b"
+    )
+
+    fig.update_yaxes(
+        title="Network Latency (ms)",
+        gridcolor="#1e293b"
     )
 
     st.plotly_chart(

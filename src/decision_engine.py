@@ -3,28 +3,53 @@ class DecisionEngine:
     def decide(self, task, vehicle, edge, cloud):
 
         latency = task["latency_requirement"]
+        priority = task["task_priority"]
+        task_size = task["task_size"]
 
-        # Safety-critical tasks
-        if latency <= 20:
+        vehicle_cpu = vehicle["cpu_usage"]
+        battery = vehicle["battery_level"]
+        speed = vehicle["vehicle_speed"]
+        traffic = vehicle["traffic_density"]
 
-            # Vehicle overloaded or battery too low
-            if vehicle["cpu_usage"] > 85 or vehicle["battery_level"] < 20:
+        edge_delay = edge["network_delay"]
+        edge_bandwidth = edge["network_bandwidth"]
+
+        cloud_delay = cloud["network_delay"]
+        cloud_bandwidth = cloud["network_bandwidth"]
+
+        # High-priority safety-critical tasks
+        if priority == 3 or latency <= 20:
+
+            if (
+                vehicle_cpu < 85
+                and battery > 20
+                and traffic < 80
+            ):
+                return "VEHICLE"
+
+            if edge_delay < 30 and edge_bandwidth > task_size:
                 return "EDGE"
 
             return "VEHICLE"
 
         # Medium-priority tasks
-        elif latency <= 100:
+        if priority == 2 or latency <= 100:
 
-            if edge["network_delay"] < 40:
+            if edge_delay < 40 and edge_bandwidth > task_size:
                 return "EDGE"
 
-            return "CLOUD"
-
-        # Low-priority tasks
-        else:
-
-            if cloud["network_delay"] < 120:
+            if cloud_delay < 130 and cloud_bandwidth > task_size:
                 return "CLOUD"
 
-            return "EDGE"
+            return "VEHICLE"
+
+        # Low-priority tasks
+        if priority == 1:
+
+            if cloud_delay < 150 and cloud_bandwidth > task_size:
+                return "CLOUD"
+
+            if edge_delay < 50:
+                return "EDGE"
+
+            return "VEHICLE"

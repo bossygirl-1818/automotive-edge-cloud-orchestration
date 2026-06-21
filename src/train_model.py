@@ -1,28 +1,31 @@
 import pandas as pd
+import joblib
 
 from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
-from sklearn.metrics import accuracy_score
-import joblib
+from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
+from sklearn.metrics import accuracy_score, classification_report
 
-# Load dataset
+
 df = pd.read_csv("data/training_data.csv")
 
-# Features
-X = df[
-    [
-        "vehicle_cpu",
-        "battery",
-        "edge_delay",
-        "cloud_delay",
-        "task_latency"
-    ]
+features = [
+    "vehicle_cpu",
+    "battery",
+    "vehicle_speed",
+    "traffic_density",
+    "edge_delay",
+    "edge_bandwidth",
+    "cloud_delay",
+    "cloud_bandwidth",
+    "task_latency",
+    "task_priority",
+    "task_size"
 ]
 
-# Target
+X = df[features]
 y = df["decision"]
 
-# Split data
 X_train, X_test, y_train, y_test = train_test_split(
     X,
     y,
@@ -30,20 +33,51 @@ X_train, X_test, y_train, y_test = train_test_split(
     random_state=42
 )
 
-# Train model
-model = DecisionTreeClassifier()
+models = {
+    "Decision Tree": DecisionTreeClassifier(random_state=42),
+    "Random Forest": RandomForestClassifier(
+        n_estimators=100,
+        random_state=42
+    ),
+    "Gradient Boosting": GradientBoostingClassifier(random_state=42)
+}
 
-model.fit(X_train, y_train)
+results = []
 
-# Predictions
-predictions = model.predict(X_test)
+best_model = None
+best_accuracy = 0
+best_model_name = ""
 
-# Accuracy
-accuracy = accuracy_score(y_test, predictions)
+for name, model in models.items():
 
-print(f"\nModel Accuracy: {accuracy:.4f}")
+    model.fit(X_train, y_train)
 
-# Save model
-joblib.dump(model, "data/orchestrator_model.pkl")
+    predictions = model.predict(X_test)
 
-print("\nModel saved successfully!")
+    accuracy = accuracy_score(y_test, predictions)
+
+    results.append({
+        "model": name,
+        "accuracy": accuracy
+    })
+
+    print("\n==============================")
+    print(name)
+    print("==============================")
+    print(f"Accuracy: {accuracy:.4f}")
+    print(classification_report(y_test, predictions))
+
+    if accuracy > best_accuracy:
+        best_accuracy = accuracy
+        best_model = model
+        best_model_name = name
+
+results_df = pd.DataFrame(results)
+results_df.to_csv("data/model_comparison.csv", index=False)
+
+joblib.dump(best_model, "data/orchestrator_model.pkl")
+
+print("\nBest Model:", best_model_name)
+print(f"Best Accuracy: {best_accuracy:.4f}")
+print("Best model saved to data/orchestrator_model.pkl")
+print("Model comparison saved to data/model_comparison.csv")

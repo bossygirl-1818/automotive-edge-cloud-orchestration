@@ -1,15 +1,17 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+import streamlit.components.v1 as components
 
 
 def render_graph_tabs():
-    tab1, tab2, tab3, tab4 = st.tabs(
+    tab1, tab2, tab3, tab4, tab5 = st.tabs(
         [
             "📊 Model Comparison",
             "⚡ Latency Analysis",
             "🌐 Task Distribution",
-            "📡 Offloading Ratio"
+            "📡 Offloading Ratio",
+            "🧠 DQN Rewards"
         ]
     )
 
@@ -24,6 +26,9 @@ def render_graph_tabs():
 
     with tab4:
         render_offloading_ratio()
+
+    with tab5:
+        render_dqn_reward_curve()
 
 
 def chart_layout(fig):
@@ -55,16 +60,23 @@ def render_model_comparison():
         textposition="outside"
     )
 
-    fig.update_yaxes(title="Accuracy (%)", range=[95, 100.5])
+    fig.update_yaxes(
+        title="Accuracy (%)",
+        range=[95, 100.5]
+    )
+
     fig.update_xaxes(title="Model")
 
-    st.plotly_chart(chart_layout(fig), use_container_width=True)
+    st.plotly_chart(
+        chart_layout(fig),
+        use_container_width=True
+    )
 
 
 def render_latency_comparison():
     df = pd.DataFrame({
-        "Strategy": ["Adaptive", "ML"],
-        "Average Latency": [46.65, 46.69]
+        "Strategy": ["Adaptive", "ML", "Deep RL"],
+        "Average Latency": [46.65, 46.69, 44.80]
     })
 
     fig = px.bar(
@@ -83,7 +95,10 @@ def render_latency_comparison():
     fig.update_yaxes(title="Latency (ms)")
     fig.update_xaxes(title="Strategy")
 
-    st.plotly_chart(chart_layout(fig), use_container_width=True)
+    st.plotly_chart(
+        chart_layout(fig),
+        use_container_width=True
+    )
 
 
 def render_task_distribution():
@@ -103,7 +118,10 @@ def render_task_distribution():
     fig.update_traces(textposition="outside")
     fig.update_yaxes(title="Number of Tasks")
 
-    st.plotly_chart(chart_layout(fig), use_container_width=True)
+    st.plotly_chart(
+        chart_layout(fig),
+        use_container_width=True
+    )
 
 
 def render_offloading_ratio():
@@ -120,4 +138,27 @@ def render_offloading_ratio():
         hole=0.45
     )
 
-    st.plotly_chart(chart_layout(fig), use_container_width=True)
+    st.plotly_chart(
+        chart_layout(fig),
+        use_container_width=True
+    )
+
+
+def render_dqn_reward_curve():
+    st.markdown(
+        '<div class="graph-title">Deep RL Training Reward Curve</div>',
+        unsafe_allow_html=True
+    )
+
+    with open(
+        "data/dqn_reward_curve.html",
+        "r",
+        encoding="utf-8"
+    ) as file:
+        reward_html = file.read()
+
+    components.html(
+        reward_html,
+        height=550,
+        scrolling=True
+    )

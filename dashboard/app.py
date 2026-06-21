@@ -1,16 +1,23 @@
 import streamlit as st
 import pandas as pd
 
+from streamlit_autorefresh import st_autorefresh
 from components.load_css import load_css
 from components.sidebar import render_sidebar
 from components.metrics import render_metrics
 from components.graphs import render_graph_tabs
+from components.gauges import render_gauges
 
 
 st.set_page_config(
     page_title="Automotive Edge-Cloud Orchestrator",
     page_icon="🚗",
     layout="wide"
+)
+
+st_autorefresh(
+    interval=5000,
+    key="dashboard_refresh"
 )
 
 st.markdown(
@@ -44,6 +51,13 @@ render_metrics(
     selected_accuracy,
     selected_model
 )
+
+st.markdown(
+    '<h2 style="color:white;">🚗 Live Resource Monitoring</h2>',
+    unsafe_allow_html=True
+)
+
+render_gauges()
 
 st.markdown("<br>", unsafe_allow_html=True)
 

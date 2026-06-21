@@ -1,5 +1,6 @@
 import streamlit as st
-from PIL import Image
+import pandas as pd
+import plotly.express as px
 
 
 def render_graph_tabs():
@@ -13,42 +14,110 @@ def render_graph_tabs():
     )
 
     with tab1:
-        render_graph_card(
-            "ML Model Accuracy Comparison",
-            "data/model_comparison.png",
-            900
-        )
+        render_model_comparison()
 
     with tab2:
-        render_graph_card(
-            "Average Latency Comparison",
-            "data/latency_comparison.png",
-            900
-        )
+        render_latency_comparison()
 
     with tab3:
-        render_graph_card(
-            "Vehicle vs Edge vs Cloud Task Distribution",
-            "data/task_distribution.png",
-            900
-        )
+        render_task_distribution()
 
     with tab4:
-        render_graph_card(
-            "Task Offloading Ratio",
-            "data/offloading_ratio.png",
-            700
-        )
+        render_offloading_ratio()
 
 
-def render_graph_card(title, image_path, width):
-    st.markdown('<div class="graph-card">', unsafe_allow_html=True)
+def chart_layout(fig):
+    fig.update_layout(
+        template="plotly_dark",
+        paper_bgcolor="#020617",
+        plot_bgcolor="#020617",
+        font=dict(color="#f8fafc"),
+        margin=dict(l=30, r=30, t=50, b=30),
+        height=450
+    )
+    return fig
 
-    st.markdown(
-        f'<div class="graph-title">{title}</div>',
-        unsafe_allow_html=True
+
+def render_model_comparison():
+    df = pd.read_csv("data/model_comparison.csv")
+    df["accuracy_percent"] = df["accuracy"] * 100
+
+    fig = px.bar(
+        df,
+        x="model",
+        y="accuracy_percent",
+        text="accuracy_percent",
+        title="ML Model Accuracy Comparison"
     )
 
-    st.image(Image.open(image_path), width=width)
+    fig.update_traces(
+        texttemplate="%{text:.2f}%",
+        textposition="outside"
+    )
 
-    st.markdown('</div>', unsafe_allow_html=True)
+    fig.update_yaxes(title="Accuracy (%)", range=[95, 100.5])
+    fig.update_xaxes(title="Model")
+
+    st.plotly_chart(chart_layout(fig), use_container_width=True)
+
+
+def render_latency_comparison():
+    df = pd.DataFrame({
+        "Strategy": ["Adaptive", "ML"],
+        "Average Latency": [46.65, 46.69]
+    })
+
+    fig = px.bar(
+        df,
+        x="Strategy",
+        y="Average Latency",
+        text="Average Latency",
+        title="Average Latency Comparison"
+    )
+
+    fig.update_traces(
+        texttemplate="%{text:.2f} ms",
+        textposition="outside"
+    )
+
+    fig.update_yaxes(title="Latency (ms)")
+    fig.update_xaxes(title="Strategy")
+
+    st.plotly_chart(chart_layout(fig), use_container_width=True)
+
+
+def render_task_distribution():
+    df = pd.DataFrame({
+        "Execution Location": ["Vehicle", "Edge", "Cloud"],
+        "Tasks": [386, 361, 253]
+    })
+
+    fig = px.bar(
+        df,
+        x="Execution Location",
+        y="Tasks",
+        text="Tasks",
+        title="Task Distribution Across Vehicle, Edge, and Cloud"
+    )
+
+    fig.update_traces(textposition="outside")
+    fig.update_yaxes(title="Number of Tasks")
+
+    st.plotly_chart(chart_layout(fig), use_container_width=True)
+
+
+def render_offloading_ratio():
+    df = pd.DataFrame({
+        "Category": ["Vehicle Processing", "Offloaded Processing"],
+        "Percentage": [38.6, 61.4]
+    })
+
+    fig = px.pie(
+        df,
+        names="Category",
+        values="Percentage",
+        title="Task Offloading Ratio",
+        hole=0.45
+    )
+
+    st.plotly_chart(chart_layout(fig), use_container_width=True)

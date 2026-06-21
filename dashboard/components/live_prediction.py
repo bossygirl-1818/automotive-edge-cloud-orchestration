@@ -10,7 +10,6 @@ def render_live_prediction(selected_model_file):
 
     generator = TaskGenerator()
     monitor = ResourceMonitor()
-
     model = joblib.load(selected_model_file)
 
     task = generator.generate_task(1)
@@ -34,35 +33,29 @@ def render_live_prediction(selected_model_file):
 
     prediction = model.predict(input_data)[0]
 
-    st.markdown('<div class="graph-card">', unsafe_allow_html=True)
-
     st.markdown(
-        '<div class="graph-title">Live ML Offloading Decision</div>',
+        '<div class="section-title">⚡ Live ML Offloading Decision</div>',
         unsafe_allow_html=True
     )
 
-    col1, col2, col3 = st.columns(3)
+    col1, col2 = st.columns(2)
 
     with col1:
-        st.metric("Task Type", task["task_type"])
-        st.metric("Task Priority", task["task_priority"])
+        st.metric("Task", task["task_type"])
+        st.metric("Priority", task["task_priority"])
+        st.metric("Latency", f"{task['latency_requirement']} ms")
 
     with col2:
-        st.metric("Task Latency", f"{task['latency_requirement']} ms")
-        st.metric("Task Size", f"{task['task_size']} MB")
-
-    with col3:
-        st.metric("Predicted Location", prediction)
-        st.metric("Selected Model", selected_model_file.split("/")[-1])
-
-    st.markdown('</div>', unsafe_allow_html=True)
+        st.metric("Size", f"{task['task_size']} MB")
+        st.metric("Decision", prediction)
+        st.metric("Model", selected_model_file.split("/")[-1])
 
     return {
-    "task_type": task["task_type"],
-    "latency": task["latency_requirement"],
-    "priority": task["task_priority"],
-    "decision": prediction,
-    "edge_delay": edge["network_delay"],
-    "cloud_delay": cloud["network_delay"],
-    "battery": vehicle["battery_level"]
-}
+        "task_type": task["task_type"],
+        "latency": task["latency_requirement"],
+        "priority": task["task_priority"],
+        "decision": prediction,
+        "edge_delay": edge["network_delay"],
+        "cloud_delay": cloud["network_delay"],
+        "battery": vehicle["battery_level"]
+    }

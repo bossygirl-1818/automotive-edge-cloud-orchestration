@@ -6,7 +6,7 @@ from src.task_generator import TaskGenerator
 from src.resource_monitor import ResourceMonitor
 
 
-def render_task_queue(selected_model_file, num_tasks=8):
+def render_task_queue(selected_model_file, num_tasks=6):
 
     generator = TaskGenerator()
     monitor = ResourceMonitor()
@@ -17,6 +17,7 @@ def render_task_queue(selected_model_file, num_tasks=8):
     for i in range(1, num_tasks + 1):
 
         task = generator.generate_task(i)
+
         vehicle = monitor.get_vehicle_resources()
         edge = monitor.get_edge_resources()
         cloud = monitor.get_cloud_resources()
@@ -38,12 +39,10 @@ def render_task_queue(selected_model_file, num_tasks=8):
         prediction = model.predict(input_data)[0]
 
         rows.append({
-            "Task ID": task["task_id"],
-            "Task Type": task["task_type"],
+            "Task": task["task_id"],
+            "Type": task["task_type"],
             "Priority": task["task_priority"],
-            "Latency (ms)": task["latency_requirement"],
-            "Size (MB)": task["task_size"],
-            "Predicted Location": prediction
+            "Route": prediction
         })
 
     df = pd.DataFrame(rows)
@@ -56,5 +55,8 @@ def render_task_queue(selected_model_file, num_tasks=8):
     st.dataframe(
         df,
         use_container_width=True,
-        hide_index=True
+        hide_index=True,
+        height=260
     )
+
+    st.info(f"⚡ {len(df)} Tasks Currently Waiting For Scheduling")

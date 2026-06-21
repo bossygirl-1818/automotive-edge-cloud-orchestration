@@ -14,12 +14,21 @@ def create_gauge(title, value):
         go.Indicator(
             mode="gauge+number",
             value=value,
-            title={"text": title},
+            title={
+                "text": title,
+                "font": {"size": 14, "color": "white"}
+            },
+            number={
+                "font": {"size": 22, "color": "#38bdf8"}
+            },
             gauge={
-                "axis": {"range": [0, 100]},
+                "axis": {
+                    "range": [0, 100],
+                    "tickfont": {"color": "white", "size": 10}
+                },
                 "bar": {"color": "#38bdf8"},
                 "bgcolor": "#111827",
-                "borderwidth": 2,
+                "borderwidth": 1,
                 "bordercolor": "#38bdf8",
                 "steps": [
                     {"range": [0, 50], "color": "#0f172a"},
@@ -33,17 +42,9 @@ def create_gauge(title, value):
     fig.update_layout(
         paper_bgcolor="#020617",
         plot_bgcolor="#020617",
-        font=dict(
-            color="white",
-            size=16
-        ),
-        height=250,
-        margin=dict(
-            l=20,
-            r=20,
-            t=60,
-            b=20
-        )
+        font=dict(color="white"),
+        height=190,
+        margin=dict(l=10, r=10, t=45, b=10)
     )
 
     return fig
@@ -55,56 +56,30 @@ def render_gauges():
     edge = get_edge_resources()
     cloud = get_cloud_resources()
 
-    col1, col2, col3, col4 = st.columns(4)
+    row1_col1, row1_col2 = st.columns(2)
 
-    with col1:
+    with row1_col1:
         st.plotly_chart(
-            create_gauge(
-                "🚗 Vehicle CPU",
-                vehicle["cpu"]
-            ),
+            create_gauge("🚗 Vehicle CPU", vehicle["cpu"]),
             use_container_width=True
         )
-        st.metric(
-            "CPU Usage",
-            f"{vehicle['cpu']}%"
-        )
 
-    with col2:
+    with row1_col2:
         st.plotly_chart(
-            create_gauge(
-                "🔋 Battery",
-                vehicle["battery"]
-            ),
+            create_gauge("🔋 Battery", vehicle["battery"]),
             use_container_width=True
         )
-        st.metric(
-            "Battery Level",
-            f"{vehicle['battery']}%"
-        )
 
-    with col3:
+    row2_col1, row2_col2 = st.columns(2)
+
+    with row2_col1:
         st.plotly_chart(
-            create_gauge(
-                "📡 Edge Load",
-                edge["load"]
-            ),
+            create_gauge("📡 Edge Load", edge["load"]),
             use_container_width=True
         )
-        st.metric(
-            "Edge Utilization",
-            f"{edge['load']}%"
-        )
 
-    with col4:
+    with row2_col2:
         st.plotly_chart(
-            create_gauge(
-                "☁️ Cloud Load",
-                cloud["load"]
-            ),
+            create_gauge("☁️ Cloud Load", cloud["load"]),
             use_container_width=True
-        )
-        st.metric(
-            "Cloud Utilization",
-            f"{cloud['load']}%"
         )

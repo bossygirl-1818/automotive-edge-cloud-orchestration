@@ -101,3 +101,4 @@ Reason: Highest orchestration score based on latency, bandwidth and CPU utilizat
 </div>"""
 
     st.markdown(result_html, unsafe_allow_html=True)
+    return best_edge["name"]

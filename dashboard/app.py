@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 
 from components.edge_selection import render_edge_selection
+from components.topology import render_topology
 from components.explainability import render_explainability
 from streamlit_autorefresh import st_autorefresh
 from components.live_prediction import render_live_prediction
@@ -12,6 +13,7 @@ from components.sidebar import render_sidebar
 from components.metrics import render_metrics
 from components.graphs import render_graph_tabs
 from components.gauges import render_gauges
+
 
 
 st.set_page_config(
@@ -92,7 +94,13 @@ render_explainability(
     live_decision["battery"]
 )
 
-render_edge_selection()
+best_edge = render_edge_selection()
+
+render_topology(
+    selected_edge=best_edge,
+    decision=live_decision["decision"]
+)
+
 render_task_queue(selected_model_file)
 render_decision_history()
 

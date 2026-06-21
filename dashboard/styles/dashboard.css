@@ -355,3 +355,111 @@ li[role="option"]:hover {
     text-align: center;
     margin-bottom: 18px;
 }
+.topology-box {
+    background: #020617;
+    border: 1px solid rgba(56,189,248,0.35);
+    border-radius: 22px;
+    padding: 30px;
+    text-align: center;
+    box-shadow: 0 12px 35px rgba(0,0,0,0.45);
+    margin-bottom: 30px;
+}
+
+.topology-node {
+    padding: 22px;
+    border-radius: 18px;
+    font-size: 26px;
+    font-weight: 900;
+    color: white;
+    margin: 12px auto;
+    max-width: 420px;
+}
+
+.vehicle-node {
+    border: 2px solid #22c55e;
+    box-shadow: 0 0 25px rgba(34,197,94,0.35);
+}
+
+.edge-node {
+    border: 2px solid #38bdf8;
+    box-shadow: 0 0 25px rgba(56,189,248,0.35);
+}
+
+.edge-node span {
+    color: #38bdf8;
+    font-size: 22px;
+}
+
+.cloud-node {
+    border: 2px solid #f97316;
+    box-shadow: 0 0 25px rgba(249,115,22,0.35);
+}
+
+.topology-arrow {
+    color: #38bdf8;
+    font-size: 42px;
+    font-weight: 900;
+}
+
+.topology-decision {
+    margin-top: 25px;
+    color: #f8fafc;
+    font-size: 22px;
+    font-weight: 800;
+}
+
+.topology-decision span {
+    color: #22c55e;
+    font-size: 28px;
+}
+.active-node{
+    animation:pulseNode 1.5s infinite;
+}
+
+@keyframes pulseNode{
+
+    0%{
+        transform:scale(1);
+    }
+
+    50%{
+        transform:scale(1.04);
+    }
+
+    100%{
+        transform:scale(1);
+    }
+}
+.compact-topology-box {
+    background: #020617;
+    border: 1px solid rgba(56,189,248,0.35);
+    border-radius: 18px;
+    padding: 22px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+    box-shadow: 0 10px 28px rgba(0,0,0,0.35);
+}
+
+.compact-topology-flow {
+    color: #ffffff;
+    font-size: 24px;
+    font-weight: 900;
+}
+
+.compact-arrow {
+    color: #38bdf8;
+    margin: 0 18px;
+}
+
+.compact-topology-decision {
+    color: #f8fafc;
+    font-size: 20px;
+    font-weight: 800;
+    margin-top: 14px;
+}
+
+.compact-topology-decision span {
+    color: #22c55e;
+    font-size: 24px;
+}

@@ -5,13 +5,14 @@ import streamlit.components.v1 as components
 
 
 def render_graph_tabs():
-    tab1, tab2, tab3, tab4, tab5 = st.tabs(
+    tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(
         [
             "📊 Model Comparison",
             "⚡ Latency Analysis",
             "🌐 Task Distribution",
             "📡 Offloading Ratio",
-            "🧠 DQN Rewards"
+            "🧠 DQN Rewards",
+            "🏆 Strategy Comparison"
         ]
     )
 
@@ -30,16 +31,70 @@ def render_graph_tabs():
     with tab5:
         render_dqn_reward_curve()
 
+    with tab6:
+        render_strategy_comparison()
+
 
 def chart_layout(fig):
     fig.update_layout(
         template="plotly_dark",
         paper_bgcolor="#020617",
         plot_bgcolor="#020617",
-        font=dict(color="#f8fafc"),
-        margin=dict(l=30, r=30, t=50, b=30),
-        height=450
+
+        font=dict(
+            color="#ffffff",
+            size=16
+        ),
+
+        title=dict(
+            font=dict(
+                color="#ffffff",
+                size=24
+            ),
+            x=0.02
+        ),
+
+        margin=dict(
+            l=50,
+            r=40,
+            t=70,
+            b=50
+        ),
+
+        height=500,
+
+        legend=dict(
+            font=dict(
+                color="#ffffff",
+                size=14
+            )
+        )
     )
+
+    fig.update_xaxes(
+        tickfont=dict(
+            color="#ffffff",
+            size=14
+        ),
+        title_font=dict(
+            color="#38bdf8",
+            size=18
+        ),
+        gridcolor="#1e293b"
+    )
+
+    fig.update_yaxes(
+        tickfont=dict(
+            color="#ffffff",
+            size=14
+        ),
+        title_font=dict(
+            color="#38bdf8",
+            size=18
+        ),
+        gridcolor="#1e293b"
+    )
+
     return fig
 
 
@@ -61,11 +116,11 @@ def render_model_comparison():
     )
 
     fig.update_yaxes(
-        title="Accuracy (%)",
+        title_text="Accuracy (%)",
         range=[95, 100.5]
     )
 
-    fig.update_xaxes(title="Model")
+    fig.update_xaxes(title_text="Model")
 
     st.plotly_chart(
         chart_layout(fig),
@@ -92,8 +147,8 @@ def render_latency_comparison():
         textposition="outside"
     )
 
-    fig.update_yaxes(title="Latency (ms)")
-    fig.update_xaxes(title="Strategy")
+    fig.update_yaxes(title_text="Latency (ms)")
+    fig.update_xaxes(title_text="Strategy")
 
     st.plotly_chart(
         chart_layout(fig),
@@ -116,7 +171,7 @@ def render_task_distribution():
     )
 
     fig.update_traces(textposition="outside")
-    fig.update_yaxes(title="Number of Tasks")
+    fig.update_yaxes(title_text="Number of Tasks")
 
     st.plotly_chart(
         chart_layout(fig),
@@ -138,10 +193,23 @@ def render_offloading_ratio():
         hole=0.45
     )
 
+    fig.update_layout(showlegend=False)
+
     st.plotly_chart(
         chart_layout(fig),
         use_container_width=True
     )
+
+    st.markdown("""
+    <div style="display:flex; gap:30px; margin-top:-5px; margin-bottom:25px; flex-wrap:wrap;">
+        <div style="color:white; font-weight:700; font-size:16px;">
+            <span style="color:#6366f1;">●</span> Offloaded Processing
+        </div>
+        <div style="color:white; font-weight:700; font-size:16px;">
+            <span style="color:#f97316;">●</span> Vehicle Processing
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
 
 
 def render_dqn_reward_curve():
@@ -162,3 +230,68 @@ def render_dqn_reward_curve():
         height=550,
         scrolling=True
     )
+
+
+def render_strategy_comparison():
+    df = pd.read_csv("data/strategy_comparison.csv")
+
+    fig = px.bar(
+        df,
+        x="strategy",
+        y="average_reward",
+        text="average_reward",
+        title="Rule-Based vs ML-Based vs Deep RL Reward Comparison"
+    )
+
+    fig.update_traces(
+        texttemplate="%{text:.2f}",
+        textposition="outside",
+        marker_color=["#6366f1", "#f97316", "#22c55e"]
+    )
+
+    fig.update_layout(
+        template="plotly_dark",
+        paper_bgcolor="#020617",
+        plot_bgcolor="#020617",
+        font=dict(color="#ffffff", size=15),
+        title=dict(
+            text="Rule-Based vs ML-Based vs Deep RL Reward Comparison",
+            font=dict(size=24, color="#ffffff"),
+            x=0.02
+        ),
+        margin=dict(l=60, r=40, t=80, b=80),
+        height=520,
+        showlegend=False
+    )
+
+    fig.update_xaxes(
+        title_text="Strategy",
+        tickfont=dict(color="#ffffff", size=14),
+        title_font=dict(color="#ffffff", size=16)
+    )
+
+    fig.update_yaxes(
+        title_text="Average Reward",
+        tickfont=dict(color="#ffffff", size=14),
+        title_font=dict(color="#ffffff", size=16),
+        gridcolor="#334155"
+    )
+
+    st.plotly_chart(
+        fig,
+        use_container_width=True
+    )
+
+    st.markdown("""
+    <div style="display:flex; gap:30px; margin-top:-5px; margin-bottom:25px; flex-wrap:wrap;">
+        <div style="color:white; font-weight:700; font-size:16px;">
+            <span style="color:#6366f1;">●</span> Rule-Based Orchestrator
+        </div>
+        <div style="color:white; font-weight:700; font-size:16px;">
+            <span style="color:#f97316;">●</span> Machine Learning Orchestrator
+        </div>
+        <div style="color:white; font-weight:700; font-size:16px;">
+            <span style="color:#22c55e;">●</span> Deep Reinforcement Learning Orchestrator
+        </div>
+    </div>
+    """, unsafe_allow_html=True)

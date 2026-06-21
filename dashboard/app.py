@@ -1,6 +1,8 @@
 import streamlit as st
 import pandas as pd
 
+from components.edge_selection import render_edge_selection
+from components.explainability import render_explainability
 from streamlit_autorefresh import st_autorefresh
 from components.live_prediction import render_live_prediction
 from components.decision_history import render_decision_history
@@ -78,7 +80,19 @@ st.markdown(f"""
 </div>
 """, unsafe_allow_html=True)
 
-render_live_prediction(selected_model_file)
+live_decision = render_live_prediction(selected_model_file)
+
+render_explainability(
+    live_decision["task_type"],
+    live_decision["latency"],
+    live_decision["priority"],
+    live_decision["decision"],
+    live_decision["edge_delay"],
+    live_decision["cloud_delay"],
+    live_decision["battery"]
+)
+
+render_edge_selection()
 render_task_queue(selected_model_file)
 render_decision_history()
 

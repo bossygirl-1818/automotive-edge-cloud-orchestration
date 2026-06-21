@@ -34,10 +34,7 @@ def render_live_prediction(selected_model_file):
 
     prediction = model.predict(input_data)[0]
 
-    st.markdown(
-        '<div class="graph-card">',
-        unsafe_allow_html=True
-    )
+    st.markdown('<div class="graph-card">', unsafe_allow_html=True)
 
     st.markdown(
         '<div class="graph-title">Live ML Offloading Decision</div>',
@@ -58,7 +55,14 @@ def render_live_prediction(selected_model_file):
         st.metric("Predicted Location", prediction)
         st.metric("Selected Model", selected_model_file.split("/")[-1])
 
-    st.markdown(
-        '</div>',
-        unsafe_allow_html=True
-    )
+    st.markdown('</div>', unsafe_allow_html=True)
+
+    return {
+    "task_type": task["task_type"],
+    "latency": task["latency_requirement"],
+    "priority": task["task_priority"],
+    "decision": prediction,
+    "edge_delay": edge["network_delay"],
+    "cloud_delay": cloud["network_delay"],
+    "battery": vehicle["battery_level"]
+}

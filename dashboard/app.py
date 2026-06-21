@@ -1,65 +1,70 @@
 import streamlit as st
-from PIL import Image
+import pandas as pd
+
+from components.load_css import load_css
+from components.sidebar import render_sidebar
+from components.metrics import render_metrics
+from components.graphs import render_graph_tabs
+
 
 st.set_page_config(
     page_title="Automotive Edge-Cloud Orchestrator",
+    page_icon="🚗",
     layout="wide"
 )
 
-st.title(
-    "🚗 Self-Adaptive Task Orchestration for the Automotive Edge-Cloud Continuum"
+st.markdown(
+    f"<style>{load_css('dashboard/styles/dashboard.css')}</style>",
+    unsafe_allow_html=True
 )
 
-st.markdown("---")
+model_df = pd.read_csv("data/model_comparison.csv")
 
-# Metrics
+model_list = model_df["model"].tolist()
 
-col1, col2, col3, col4 = st.columns(4)
+total_tasks, selected_model = render_sidebar(model_list)
 
-with col1:
-    st.metric("Total Tasks", "1000")
+selected_row = model_df[model_df["model"] == selected_model].iloc[0]
 
-with col2:
-    st.metric("Avg Latency", "46.67 ms")
+selected_accuracy = selected_row["accuracy"] * 100
+selected_model_file = selected_row["model_file"]
 
-with col3:
-    st.metric("Vehicle Tasks", "386")
-
-with col4:
-    st.metric("Edge + Cloud", "614")
-
-st.markdown("---")
-
-st.subheader("Average Latency Comparison")
-
-latency_graph = Image.open(
-    "data/latency_comparison.png"
+st.markdown(
+    '<div class="main-title">Self-Adaptive Task Orchestration Dashboard</div>',
+    unsafe_allow_html=True
 )
 
-st.image(latency_graph)
-
-st.markdown("---")
-
-st.subheader("Task Distribution Comparison")
-
-distribution_graph = Image.open(
-    "data/task_distribution.png"
+st.markdown(
+    '<div class="sub-title">Automotive Edge–Cloud Continuum | ML-Based Dynamic Workload Offloading</div>',
+    unsafe_allow_html=True
 )
 
-st.image(distribution_graph)
-
-st.markdown("---")
-
-st.subheader("Task Offloading Ratio")
-
-offloading_graph = Image.open(
-    "data/offloading_ratio.png"
+render_metrics(
+    total_tasks,
+    selected_accuracy,
+    selected_model
 )
 
-st.image(offloading_graph)
+st.markdown("<br>", unsafe_allow_html=True)
 
-st.markdown("---")
+st.markdown(f"""
+<div class="graph-card">
+    <div class="graph-title">Active Model Details</div>
+    <p style="color:#cbd5e1; font-size:16px;">
+    Selected Model:
+    <b style="color:#38bdf8;">{selected_model}</b><br>
+    Accuracy:
+    <b style="color:#38bdf8;">{selected_accuracy:.2f}%</b><br>
+    Model File:
+    <b style="color:#38bdf8;">{selected_model_file}</b>
+    </p>
+</div>
+""", unsafe_allow_html=True)
 
-st.success(
-    "Machine Learning Based Automotive Orchestrator Running Successfully"
-)
+render_graph_tabs()
+
+st.markdown("""
+<div class="success-box">
+✅ Interactive Multi-Model Automotive Edge-Cloud Orchestrator Running Successfully
+</div>
+""", unsafe_allow_html=True)

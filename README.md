@@ -2,216 +2,357 @@
 
 ## 📌 Overview
 
-Modern autonomous vehicles generate thousands of computational tasks every second. These tasks vary in urgency, resource requirements, and latency constraints.
+Modern connected and autonomous vehicles continuously generate computational workloads ranging from safety-critical perception tasks to cloud-scale analytics. Executing every workload onboard increases computational load and battery consumption, while offloading everything to the cloud introduces network latency and communication overhead.
 
-Processing every task onboard increases computational load, while sending everything to the cloud introduces network latency. This project proposes a **Self-Adaptive Task Orchestration Framework** that dynamically decides where tasks should execute:
+This project presents a **Self-Adaptive Task Orchestration Framework** that dynamically determines the optimal execution environment for automotive workloads across:
 
-- 🚗 Vehicle (Onboard)
-- 📡 Edge Server
-- ☁️ Cloud Server
+* 🚗 Vehicle (Onboard Computing)
+* 📡 Edge Infrastructure
+* ☁️ Cloud Infrastructure
 
-The goal is to optimize:
-
-- Latency
-- Resource Utilization
-- Task Completion Rate
-- System Efficiency
+The system combines **Machine Learning**, **Deep Reinforcement Learning (DQN)**, and **Hybrid Decision Fusion** to optimize task execution in real time.
 
 ---
 
-## 🎯 Problem Statement
+# 🎯 Project Objectives
 
-Autonomous vehicles continuously perform operations such as:
+The orchestration framework aims to:
 
-- Lane Detection
-- Obstacle Detection
-- Traffic Sign Recognition
-- Route Planning
-- Vehicle Diagnostics
-
-Different tasks have different latency requirements.
-
-A fixed execution strategy is inefficient because:
-
-- Processing everything onboard overloads the vehicle.
-- Processing everything in the cloud introduces delays.
-- Static approaches cannot adapt to changing conditions.
-
-This project introduces an adaptive orchestration framework that dynamically selects the best execution environment.
+* Minimize latency
+* Reduce vehicle resource consumption
+* Improve task completion rate
+* Increase energy efficiency
+* Optimize workload distribution
+* Adapt dynamically to changing conditions
 
 ---
 
-## 🏗️ System Architecture
+# 🏗️ System Architecture
 
-
-  Vehicle Sensors
-        │
-        ▼
-  Task Generator
-        │
-        ▼
-    Task Queue
-        │
-        ▼
- Resource Monitor
-        │
-        ▼
- ML Orchestrator
-         │
- ┌───────┼──────┐
- │       │      │
- ▼       ▼      ▼
-Vehicle Edge  Cloud
-         │
-         ▼
-Execution Simulator
-         │
-         ▼
-Metrics Collector
-         │
-         ▼
-Dashboard
+```text
+Vehicle Sensors
+       │
+       ▼
+Task Generator
+       │
+       ▼
+Resource Monitor
+       │
+       ▼
+ML Orchestrator
+       │
+       ▼
+DQN Orchestrator
+       │
+       ▼
+Hybrid Orchestrator
+       │
+ ┌─────┼─────┐
+ │     │     │
+ ▼     ▼     ▼
+Vehicle Edge Cloud
+       │
+       ▼
+Telemetry Collector
+       │
+       ▼
+Analytics Layer
+       │
+       ▼
+BMW Dashboard
+       │
+       ▼
+Reports & Executive Summary
 ```
 
 ---
 
-## ⚙️ Features
+# 🧠 Core Features
 
-### Task Generation
+## Machine Learning Orchestrator
 
-Generates automotive workloads:
+Models:
 
-- Lane Detection
-- Obstacle Detection
-- Traffic Sign Recognition
-- Route Planning
-- Vehicle Diagnostics
+* Decision Tree
+* Random Forest
+* Gradient Boosting
 
-### Resource Monitoring
+Predicts:
+
+* VEHICLE
+* EDGE
+* CLOUD
+
+execution targets based on:
+
+* Vehicle CPU
+* Battery Level
+* Task Size
+* Task Priority
+* Network Delay
+* Bandwidth
+
+---
+
+## Deep Reinforcement Learning Orchestrator
+
+Implemented using Deep Q-Networks (DQN).
+
+Features:
+
+* State-Aware Decisions
+* Reward Optimization
+* Adaptive Offloading
+* Continuous Learning
+
+Outputs:
+
+* RL Decision
+* Reward Score
+* Performance Feedback
+
+---
+
+## Hybrid Orchestrator
+
+Combines:
+
+```text
+ML Decision
++
+DQN Decision
+=
+Final Orchestration Decision
+```
+
+Provides:
+
+* More robust decisions
+* Improved adaptability
+* Higher reliability
+
+---
+
+## Real-Time Resource Monitoring
 
 Monitors:
 
-- Vehicle CPU Usage
-- Vehicle Battery Level
-- Edge Network Delay
-- Cloud Network Delay
+### Vehicle
 
-### Adaptive Decision Engine
+* CPU Utilization
+* Battery Level
 
-Makes execution decisions based on:
+### Edge
 
-- Latency Requirements
-- CPU Usage
-- Battery Levels
-- Network Conditions
+* Edge Load
+* Network Delay
 
-### Machine Learning Orchestrator
+### Cloud
 
-Uses a Decision Tree Classifier to predict:
-
-- VEHICLE
-- EDGE
-- CLOUD
-
-execution targets.
-
-### Performance Evaluation
-
-Measures:
-
-- Average Latency
-- Task Distribution
-- Offloading Ratio
-
-### Interactive Dashboard
-
-Built using Streamlit.
+* Cloud Load
+* Network Delay
 
 ---
 
-## 🛠️ Technology Stack
+# 📊 Analytics Layer
 
-### Programming
+The dashboard includes:
 
-- Python
+### Reward Analytics
 
-### Data Processing
+Tracks reinforcement learning rewards.
 
-- Pandas
-- NumPy
+### DQN Learning Curve
 
-### Machine Learning
+Visualizes agent learning progress.
 
-- Scikit-Learn
+### Decision Analytics
 
-### Visualization
+Shows:
 
-- Matplotlib
+* Vehicle %
+* Edge %
+* Cloud %
 
-### Dashboard
+distribution.
 
-- Streamlit
+### Latency Analytics
 
-### Version Control
+Evaluates response-time trends.
 
-- Git
-- GitHub
+### Energy Analytics
 
----
+Tracks battery consumption.
 
-## 📊 Results
+### Benchmark Comparison
 
-### Average Latency
+Compares:
 
-| Strategy              | Average Latency |
-|-----------------------|-----------------|
-| Adaptive Orchestrator | 46.65 ms        |
-| ML Orchestrator       | 46.69 ms        |
+* ML
+* DQN
+* Hybrid Orchestrator
 
-### Task Distribution
+performance.
 
-| Execution Location | Tasks |
-|--------------------|-------|
-| Vehicle            | 386   |
-| Edge               | 361   |
-| Cloud              | 253   |
+### Offloading Distribution
 
-### Offloading Ratio
-
-- Local Processing: 38.6%
-- Offloaded Processing: 61.4%
+Visualizes workload allocation across resources.
 
 ---
 
-## 📈 Generated Visualizations
+# 📈 Dashboard Features
 
-- Average Latency Comparison
-- Task Distribution Comparison
-- Offloading Ratio
+Built using Streamlit and Plotly.
+
+Includes:
+
+* Live ML Decision
+* DQN Decision
+* Hybrid Decision
+* Task Queue
+* Explainability Engine
+* Resource Monitoring
+* Network Topology
+* Performance Analytics
+* Executive Summary
+* PDF Report Generation
 
 ---
 
-## 🚀 How to Run
+# 📂 Project Structure
 
-### Install Dependencies
+```text
+automotive-edge-cloud-orchestration/
+│
+├── data/
+│
+├── src/
+│   ├── task_generator.py
+│   ├── resource_monitor.py
+│   ├── ml_orchestrator.py
+│   ├── evaluator.py
+│   ├── edge_selector.py
+│   │
+│   └── RL_Files/
+│       ├── dqn_agent.py
+│       ├── environment.py
+│       ├── train_dqn.py
+│       ├── evaluate_dqn.py
+│       ├── rl_simulator.py
+│       ├── telemetry_simulator.py
+│       └── realistic_rl_simulation.py
+│
+├── dashboard/
+│   ├── app.py
+│   └── components/
+│
+├── docs/
+│
+├── tests/
+│
+├── README.md
+├── requirements.txt
+└── main.py
+```
+
+---
+
+# 🛠️ Technology Stack
+
+## Programming
+
+* Python
+
+## Data Processing
+
+* Pandas
+* NumPy
+
+## Machine Learning
+
+* Scikit-Learn
+
+## Deep Reinforcement Learning
+
+* PyTorch
+
+## Dashboard
+
+* Streamlit
+
+## Visualization
+
+* Plotly
+* Matplotlib
+
+## Reporting
+
+* ReportLab
+
+## Version Control
+
+* Git
+* GitHub
+
+---
+
+# 📊 Current Results
+
+### Supported Execution Targets
+
+* 🚗 Vehicle
+* 📡 Edge
+* ☁️ Cloud
+
+### Decision Engines
+
+* Machine Learning
+* Deep Reinforcement Learning
+* Hybrid Orchestration
+
+### Analytics
+
+* Reward Analytics
+* Decision Analytics
+* Latency Analytics
+* Energy Analytics
+* Benchmark Comparison
+
+---
+
+# 🚀 Running the Project
+
+## Install Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### Run Main Simulation
+## Train Machine Learning Models
 
 ```bash
-python main.py
+python -m src.train_model
 ```
 
-### Train ML Model
+## Train DQN Agent
 
 ```bash
-python src/train_model.py
+python -m src.RL_Files.train_dqn
 ```
 
-### Run Dashboard
+## Generate RL Evaluation Data
+
+```bash
+python -m src.RL_Files.realistic_rl_simulation
+```
+
+## Generate Telemetry Data
+
+```bash
+python -m src.RL_Files.telemetry_simulator
+```
+
+## Launch Dashboard
 
 ```bash
 streamlit run dashboard/app.py
@@ -219,68 +360,92 @@ streamlit run dashboard/app.py
 
 ---
 
-## 📂 Project Structure
+# 🔮 Future Roadmap
 
+## Phase 9
 
-automotive-edge-cloud-orchestration/
-│
-├── data/
-├── dashboard/
-├── docs/
-├── src/
-├── tests/
-│
-├── README.md
-├── requirements.txt
-└── main.py
+Database & Persistence Layer
 
+* SQLite
+* PostgreSQL
+
+## Phase 10
+
+Advanced Hybrid Intelligence
+
+* Confidence-Based Fusion
+* Reward-Based Fusion
+
+## Phase 11
+
+BMW Automotive Features
+
+* Driving Modes
+* Vehicle Profiles
+* Road Scenarios
+
+## Phase 12
+
+SimPy Event Simulation
+
+## Phase 13
+
+Prometheus + Grafana Monitoring
+
+## Phase 14
+
+Research Contribution Layer
+
+## Phase 15
+
+SUMO Traffic Simulation
+
+## Phase 16
+
+Docker & AWS Deployment
+
+## Phase 17
+
+SHAP Explainability
 
 ---
 
-## 🏗️ Architecture Diagram
+# 🎓 Research Domains
 
-![Architecture Diagram](data/architecture_diagram.png)]
+This project integrates:
 
-## 📈 Visualization Outputs
-
-### Average Latency Comparison
-![Latency Comparison](data/latency_comparison.png)
-
-### Task Distribution Comparison
-![Task Distribution](data/task_distribution.png)
-
-### Offloading Ratio
-![Offloading Ratio](data/offloading_ratio.png)
-
-## 🎓 Learning Outcomes
-
-This project demonstrates:
-
-- Edge Computing
-- Cloud Computing
-- Task Offloading
-- Resource Scheduling
-- Machine Learning
-- Performance Evaluation
-- Dashboard Development
+* Machine Learning
+* Deep Reinforcement Learning
+* Edge Computing
+* Cloud Computing
+* Automotive AI
+* Explainable AI
+* Intelligent Transportation Systems
 
 ---
 
-## 👩‍💻 Author
+# 👩‍💻 Author
 
 **Vaishnavi Senthilkumar**
 
-Computer Science Student | AI & Software Development Enthusiast
+Computer Science Student
+AI / ML | Software Development | Intelligent Systems
 
 LinkedIn:
 https://www.linkedin.com/in/vaishnavi-senthil-kumar-477262305/
 
 ---
 
-## ⭐ Future Enhancements
+# ⭐ BMW Relevance
 
-- Reinforcement Learning-Based Orchestration
-- Real-Time Edge Deployment
-- SUMO Traffic Simulation Integration
-- Docker-Based Deployment
-- Kubernetes-Based Orchestration
+The project aligns with:
+
+* Connected Vehicles
+* Intelligent Transportation Systems
+* Edge AI
+* Smart Mobility
+* Vehicle-to-Cloud Communication
+* Automotive Resource Optimization
+* Autonomous Driving Support Systems
+
+This framework serves as a prototype for intelligent workload orchestration in future connected vehicle ecosystems.

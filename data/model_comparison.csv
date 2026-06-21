@@ -1,0 +1,4 @@
+model,accuracy,model_file
+Decision Tree,0.994,data/decision_tree.pkl
+Random Forest,0.997,data/random_forest.pkl
+Gradient Boosting,0.997,data/gradient_boosting.pkl

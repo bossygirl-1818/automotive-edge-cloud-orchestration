@@ -1,11 +1,41 @@
+# Python
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
 
+# Virtual Environment
 venv/
 .env
 
+# IDE
 .vscode/
+.idea/
 
-data/*.csv
+# Streamlit Cache
+.streamlit/
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Generated Reports
+Automotive_Report.pdf
+
+# Generated Visualizations
+data/*.png
+data/*.html
+
+# Model Checkpoints (optional)
+# data/*.pth
+# data/*.pkl
+
+# Logs
+*.log
+
+# Pytest Cache
+.pytest_cache/
+
+# Coverage
+.coverage
+htmlcov/

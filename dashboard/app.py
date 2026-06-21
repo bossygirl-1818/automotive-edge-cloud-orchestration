@@ -2,6 +2,9 @@ import streamlit as st
 import pandas as pd
 
 from streamlit_autorefresh import st_autorefresh
+from components.live_prediction import render_live_prediction
+from components.decision_history import render_decision_history
+from components.task_queue import render_task_queue
 from components.load_css import load_css
 from components.sidebar import render_sidebar
 from components.metrics import render_metrics
@@ -74,6 +77,10 @@ st.markdown(f"""
     </p>
 </div>
 """, unsafe_allow_html=True)
+
+render_live_prediction(selected_model_file)
+render_task_queue(selected_model_file)
+render_decision_history()
 
 render_graph_tabs()
 

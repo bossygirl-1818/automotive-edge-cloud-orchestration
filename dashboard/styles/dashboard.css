@@ -184,3 +184,27 @@ li[role="option"]:hover {
     background: #38bdf8;
     border-radius: 10px;
 }
+/* Fix metric text color */
+
+[data-testid="stMetricLabel"] {
+    color: white !important;
+    font-weight: 700 !important;
+    font-size: 16px !important;
+}
+
+[data-testid="stMetricValue"] {
+    color: #38bdf8 !important;
+    font-weight: 800 !important;
+    font-size: 32px !important;
+}
+
+[data-testid="stMetricDelta"] {
+    color: #22c55e !important;
+}
+.section-title {
+    color: #ffffff;
+    font-size: 32px;
+    font-weight: 800;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}

@@ -16,7 +16,16 @@ for i in range(1, NUM_TASKS + 1):
 
     task = generator.generate_task(i)
 
-    destination = engine.decide(task)
+    vehicle = monitor.get_vehicle_resources()
+    edge = monitor.get_edge_resources()
+    cloud = monitor.get_cloud_resources()
+
+    destination = engine.decide(
+        task,
+        vehicle,
+        edge,
+        cloud
+    )
 
     latency = simulator.execute(destination)
 

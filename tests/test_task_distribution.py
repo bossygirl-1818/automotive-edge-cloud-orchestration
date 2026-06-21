@@ -1,0 +1,3 @@
+from src.task_distribution_graph import create_task_distribution_graph
+
+create_task_distribution_graph()

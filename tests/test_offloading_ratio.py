@@ -1,0 +1,3 @@
+from src.offloading_ratio_graph import create_offloading_ratio_graph
+
+create_offloading_ratio_graph()

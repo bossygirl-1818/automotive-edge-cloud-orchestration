@@ -30,6 +30,8 @@ from components.system_report import render_system_report
 from components.executive_summary import render_executive_summary
 from components.database_status import render_database_status
 from components.database_analytics import render_database_analytics
+from components.digital_twin_dashboard import render_digital_twin_dashboard
+from components.fleet_dashboard import render_fleet_dashboard
 from components.db_decision_history import render_db_decision_history
 from components.pdf_report import render_pdf_report
 
@@ -164,11 +166,15 @@ render_energy_analytics()
 render_benchmark_comparison()
 render_offloading_distribution()
 
-# 14. Extra Graphs + History
+# 14. Digital Twin + Fleet Simulation
+render_digital_twin_dashboard()
+render_fleet_dashboard()
+
+# 15. Extra Graphs + History
 render_graph_tabs()
 render_decision_history()
 
-# 15. Reports
+# 16. Reports
 render_system_report()
 render_executive_summary()
 render_database_status()

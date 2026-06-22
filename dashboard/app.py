@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 
 from streamlit_autorefresh import st_autorefresh
-
+from src.db_logger import log_decision
 from components.load_css import load_css
 from components.sidebar import render_sidebar
 from components.metrics import render_metrics
@@ -28,6 +28,9 @@ from components.graphs import render_graph_tabs
 from components.decision_history import render_decision_history
 from components.system_report import render_system_report
 from components.executive_summary import render_executive_summary
+from components.database_status import render_database_status
+from components.database_analytics import render_database_analytics
+from components.db_decision_history import render_db_decision_history
 from components.pdf_report import render_pdf_report
 
 
@@ -111,6 +114,12 @@ hybrid_result = render_hybrid_orchestrator(
     rl_result["decision"]
 )
 
+log_decision(
+    ml_decision=live_decision["decision"],
+    dqn_decision=rl_result["decision"],
+    hybrid_decision=hybrid_result["final_decision"],
+    selected_engine=hybrid_result["reason"]
+)
 # 8. Live Resource Monitoring
 st.markdown(
     '<div class="section-title">🚗 Live Resource Monitoring</div>',
@@ -162,6 +171,9 @@ render_decision_history()
 # 15. Reports
 render_system_report()
 render_executive_summary()
+render_database_status()
+render_database_analytics()
+render_db_decision_history()
 render_pdf_report()
 
 st.markdown("""

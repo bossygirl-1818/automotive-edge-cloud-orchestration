@@ -1,13 +1,12 @@
 import streamlit as st
-import pandas as pd
 import plotly.express as px
+
+from src.db_queries import get_telemetry
 
 
 def render_latency_analytics():
 
-    df = pd.read_csv(
-        "data/vehicle_telemetry.csv"
-    )
+    df = get_telemetry()
 
     avg_latency = df["network_latency"].mean()
     max_latency = df["network_latency"].max()
@@ -21,22 +20,13 @@ def render_latency_analytics():
     col1, col2, col3 = st.columns(3)
 
     with col1:
-        st.metric(
-            "Avg Latency",
-            f"{avg_latency:.2f} ms"
-        )
+        st.metric("Avg Latency", f"{avg_latency:.2f} ms")
 
     with col2:
-        st.metric(
-            "Max Latency",
-            f"{max_latency:.0f} ms"
-        )
+        st.metric("Max Latency", f"{max_latency:.0f} ms")
 
     with col3:
-        st.metric(
-            "Min Latency",
-            f"{min_latency:.0f} ms"
-        )
+        st.metric("Min Latency", f"{min_latency:.0f} ms")
 
     fig = px.line(
         df,
@@ -50,17 +40,14 @@ def render_latency_analytics():
         template="plotly_dark",
         paper_bgcolor="#020617",
         plot_bgcolor="#020617",
-        font=dict(color="white"),
+        font=dict(color="#ffffff"),
         height=500,
-        margin=dict(l=20, r=20, t=50, b=20),
+        margin=dict(l=30, r=30, t=50, b=30),
         showlegend=False
     )
 
     fig.update_traces(
-        line=dict(
-            width=4,
-            color="#38bdf8"
-        )
+        line=dict(width=4, color="#38bdf8")
     )
 
     fig.update_xaxes(

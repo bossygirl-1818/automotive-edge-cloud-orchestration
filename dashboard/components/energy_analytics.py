@@ -1,19 +1,20 @@
 import streamlit as st
-import pandas as pd
 import plotly.express as px
+
+from src.db_queries import get_telemetry
 
 
 def render_energy_analytics():
 
-    df = pd.read_csv("data/vehicle_telemetry.csv")
+    df = get_telemetry()
 
     avg_battery = df["battery"].mean()
     max_battery = df["battery"].max()
     min_battery = df["battery"].min()
 
     energy_efficiency = (
-        df[df["battery"] >= 45].shape[0] / len(df)
-    ) * 100
+    df["battery"].mean() / df["battery"].max()
+) * 100
 
     st.markdown(
         '<div class="section-title">🔋 Energy Analytics</div>',

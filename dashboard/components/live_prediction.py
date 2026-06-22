@@ -4,7 +4,8 @@ import joblib
 
 from src.task_generator import TaskGenerator
 from src.resource_monitor import ResourceMonitor
-
+from src.task_logger import log_task
+import uuid
 
 def render_live_prediction(selected_model_file):
 
@@ -49,6 +50,15 @@ def render_live_prediction(selected_model_file):
         st.metric("Size", f"{task['task_size']} MB")
         st.metric("Decision", prediction)
         st.metric("Model", selected_model_file.split("/")[-1])
+
+        log_task(
+    task_id=str(uuid.uuid4())[:8],
+    task_type=task["task_type"],
+    priority=task["task_priority"],
+    latency=task["latency_requirement"],
+    task_size=task["task_size"],
+    predicted_location=prediction
+)
 
     return {
         "task_type": task["task_type"],

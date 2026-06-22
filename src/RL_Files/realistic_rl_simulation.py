@@ -215,4 +215,4 @@ def generate_realistic_history(episodes=150):
 
 
 if __name__ == "__main__":
-    generate_realistic_history(150)
+    generate_realistic_history(1000)

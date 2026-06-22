@@ -1,11 +1,12 @@
 import streamlit as st
-import pandas as pd
 import plotly.express as px
+
+from src.db_queries import get_rl_rewards
 
 
 def render_decision_analytics():
 
-    df = pd.read_csv("data/rl_reward_history.csv")
+    df = get_rl_rewards()
 
     decision_counts = (
         df["decision"]
@@ -119,5 +120,3 @@ def render_decision_analytics():
         fig,
         use_container_width=True
     )
-
-   

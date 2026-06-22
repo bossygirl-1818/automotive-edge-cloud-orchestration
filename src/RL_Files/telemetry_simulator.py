@@ -7,7 +7,7 @@ from datetime import datetime
 OUTPUT_FILE = "data/vehicle_telemetry.csv"
 
 
-def generate_telemetry(episodes=150):
+def generate_telemetry(episodes=1000):
 
     os.makedirs("data", exist_ok=True)
 
@@ -56,46 +56,49 @@ def generate_telemetry(episodes=150):
                 vehicle_cpu += random.randint(8, 14)
                 edge_load -= random.randint(1, 4)
                 cloud_load -= random.randint(1, 3)
-                battery -= random.uniform(0.45, 0.75)
+
+                # Vehicle processing consumes more battery
+                battery -= random.uniform(0.03, 0.08)
 
             elif episode % 11 == 0:
                 decision = "CLOUD"
                 vehicle_cpu -= random.randint(3, 8)
                 edge_load -= random.randint(2, 5)
                 cloud_load += random.randint(8, 14)
-                battery -= random.uniform(0.18, 0.35)
+
+                # Cloud offloading consumes least onboard battery
+                battery -= random.uniform(0.01, 0.03)
 
             else:
                 decision = "EDGE"
                 vehicle_cpu -= random.randint(1, 4)
                 edge_load += random.randint(3, 8)
                 cloud_load -= random.randint(1, 3)
-                battery -= random.uniform(0.25, 0.50)
 
-            # Rare heavy workload battery drop
-            if random.random() < 0.12:
-                battery -= random.uniform(1.0, 3.5)
+                # Edge offloading consumes moderate battery
+                battery -= random.uniform(0.02, 0.05)
 
-            # Natural battery fluctuation
-            battery += random.uniform(-1.0, 1.0)
+            # Rare heavy workload dip
+            if random.random() < 0.03:
+                battery -= random.uniform(0.2, 0.7)
 
-            # Heavy local processing consumes extra battery
+            # Natural EV battery fluctuation
+            battery += random.uniform(-0.08, 0.08)
+
+            # Heavy local CPU usage consumes extra power
             if vehicle_cpu > 75:
-                battery -= random.uniform(0.5, 1.5)
+                battery -= random.uniform(0.08, 0.18)
 
-            # Cloud offloading gives small battery relief
+            # Cloud offloading gives slight battery relief
             if decision == "CLOUD":
-                battery += random.uniform(0.5, 1.5)
+                battery += random.uniform(0.02, 0.10)
 
             vehicle_cpu = min(max(vehicle_cpu, 20), 90)
             edge_load = min(max(edge_load, 20), 95)
             cloud_load = min(max(cloud_load, 20), 95)
 
-            # Allow battery to continue naturally instead of flat 35%
-            battery = min(battery, 100)
-
-            if battery < 15:
-                battery = random.uniform(15, 22)
+            # Keep battery realistic for long 1000-episode simulation
+            battery = min(max(battery, 35), 100)
 
             writer.writerow([
                 episode,
@@ -114,4 +117,4 @@ def generate_telemetry(episodes=150):
 
 
 if __name__ == "__main__":
-    generate_telemetry(150)
+    generate_telemetry(1000)

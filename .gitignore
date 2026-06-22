@@ -39,3 +39,20 @@ data/*.html
 # Coverage
 .coverage
 htmlcov/
+# Prometheus
+prometheus-3.12.0.windows-amd64/
+
+# Database
+*.db
+
+# Cache
+__pycache__/
+*.pyc
+
+# Virtual Environment
+venv/
+.env
+
+prometheus-3.12.0.windows-amd64/
+prometheus-3.12.0.windows-amd64/data/
+*.lock

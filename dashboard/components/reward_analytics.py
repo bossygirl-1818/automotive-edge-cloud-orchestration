@@ -1,13 +1,11 @@
 import streamlit as st
-import pandas as pd
+from src.db_queries import get_rl_rewards
 import plotly.express as px
 
 
 def render_reward_analytics():
 
-    reward_file = "data/rl_reward_history.csv"
-
-    df = pd.read_csv(reward_file)
+    df = get_rl_rewards()
 
     total_episodes = len(df)
     avg_reward = df["reward"].mean()
@@ -28,16 +26,16 @@ def render_reward_analytics():
         st.metric("Avg Reward", f"{avg_reward:.2f}")
 
     with col3:
-        st.metric("Max Reward", max_reward)
+        st.metric("Max Reward", f"{max_reward:.2f}")
 
     with col4:
-        st.metric("Min Reward", min_reward)
+        st.metric("Min Reward", f"{min_reward:.2f}")
 
     fig = px.line(
         df,
         x="episode",
         y="reward",
-        markers=True,
+        markers=False,
         title="DQN Episode Reward Trend"
     )
 
@@ -51,8 +49,7 @@ def render_reward_analytics():
     )
 
     fig.update_traces(
-        line=dict(width=4),
-        marker=dict(size=7)
+        line=dict(width=4, color="#38bdf8")
     )
 
     fig.update_xaxes(
@@ -70,8 +67,14 @@ def render_reward_analytics():
         use_container_width=True
     )
 
+    st.markdown(
+        '<div class="graph-title">Complete RL Reward History</div>',
+        unsafe_allow_html=True
+    )
+
     st.dataframe(
-        df.tail(10),
+        df,
         use_container_width=True,
-        hide_index=True
+        hide_index=True,
+        height=500
     )

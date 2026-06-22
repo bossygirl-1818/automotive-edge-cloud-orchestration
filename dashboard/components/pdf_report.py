@@ -1,5 +1,4 @@
 import streamlit as st
-import pandas as pd
 from datetime import datetime
 
 from reportlab.platypus import (
@@ -12,18 +11,32 @@ from reportlab.platypus import (
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.lib import colors
 
+from src.db_queries import get_rl_rewards, get_telemetry
+
 
 def generate_pdf():
 
-    df = pd.read_csv("data/rl_reward_history.csv")
+    reward_df = get_rl_rewards()
+    telemetry_df = get_telemetry()
 
-    avg_reward = df["reward"].mean()
-    avg_latency = df["latency"].mean()
-    avg_battery = df["battery"].mean()
+    avg_reward = reward_df["reward"].mean()
+    avg_latency = telemetry_df["network_latency"].mean()
+    avg_battery = telemetry_df["battery"].mean()
 
-    edge_ratio = (df[df["decision"] == "EDGE"].shape[0] / len(df)) * 100
-    vehicle_ratio = (df[df["decision"] == "VEHICLE"].shape[0] / len(df)) * 100
-    cloud_ratio = (df[df["decision"] == "CLOUD"].shape[0] / len(df)) * 100
+    edge_ratio = (
+        reward_df[reward_df["decision"] == "EDGE"].shape[0]
+        / len(reward_df)
+    ) * 100
+
+    vehicle_ratio = (
+        reward_df[reward_df["decision"] == "VEHICLE"].shape[0]
+        / len(reward_df)
+    ) * 100
+
+    cloud_ratio = (
+        reward_df[reward_df["decision"] == "CLOUD"].shape[0]
+        / len(reward_df)
+    ) * 100
 
     pdf_path = "Automotive_Report.pdf"
 
@@ -56,8 +69,10 @@ def generate_pdf():
     metrics_data = [
         ["Metric", "Value"],
         ["Average Reward", f"{avg_reward:.2f}"],
-        ["Average Latency", f"{avg_latency:.2f} ms"],
-        ["Average Battery", f"{avg_battery:.2f} %"]
+        ["Average Network Latency", f"{avg_latency:.2f} ms"],
+        ["Average Battery", f"{avg_battery:.2f} %"],
+        ["Total RL Episodes", str(len(reward_df))],
+        ["Telemetry Records", str(len(telemetry_df))]
     ]
 
     metrics_table = Table(metrics_data, colWidths=[250, 180])
@@ -104,9 +119,10 @@ def generate_pdf():
     content.append(Paragraph("Executive Summary", styles["Heading2"]))
     content.append(
         Paragraph(
-            "The Hybrid ML + DQN Orchestrator achieved the best overall "
-            "performance by balancing latency, energy efficiency, and adaptive "
-            "workload offloading across Vehicle, Edge, and Cloud resources.",
+            "The Hybrid ML + DQN Orchestrator achieved strong overall "
+            "performance by balancing network latency, energy efficiency, "
+            "reward optimization, and adaptive workload offloading across "
+            "Vehicle, Edge, and Cloud resources.",
             styles["BodyText"]
         )
     )
@@ -119,8 +135,8 @@ def generate_pdf():
         ["Reason"],
         ["Lowest average latency"],
         ["Highest reward score"],
-        ["Highest decision accuracy"],
-        ["Best energy efficiency"]
+        ["Improved adaptive decision making"],
+        ["Balanced energy and resource utilization"]
     ]
 
     strategy_table = Table(strategy_data, colWidths=[430])

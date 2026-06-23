@@ -33,26 +33,64 @@ def render_digital_twin_dashboard():
     with col4:
         st.metric("Avg Completion", f"{df['total_time'].mean():.2f}")
 
-    decision_counts = df["decision"].value_counts().reset_index()
+    decision_counts = (
+        df["decision"]
+        .value_counts()
+        .reset_index()
+    )
+
     decision_counts.columns = ["Decision", "Count"]
+
+    total_tasks = decision_counts["Count"].sum()
 
     fig = px.pie(
         decision_counts,
         names="Decision",
         values="Count",
-        hole=0.55,
-        title="Digital Twin Task Distribution"
+        hole=0.58,
+        color="Decision",
+        color_discrete_map={
+            "EDGE": "#38bdf8",
+            "VEHICLE": "#22c55e",
+            "CLOUD": "#f97316"
+        }
+    )
+
+    fig.update_traces(
+        textposition="inside",
+        textinfo="percent+label",
+        textfont=dict(color="white", size=16),
+        marker=dict(
+            line=dict(
+                color="#020617",
+                width=4
+            )
+        )
     )
 
     fig.update_layout(
         template="plotly_dark",
         paper_bgcolor="#020617",
         plot_bgcolor="#020617",
-        font=dict(color="#ffffff"),
-        height=420
+        font=dict(color="#ffffff", size=15),
+        height=430,
+        showlegend=False,
+        margin=dict(l=20, r=20, t=20, b=20),
+        annotations=[
+            dict(
+                text=f"{total_tasks}<br>Tasks",
+                x=0.5,
+                y=0.5,
+                font=dict(size=22, color="#38bdf8"),
+                showarrow=False
+            )
+        ]
     )
 
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(
+        fig,
+        use_container_width=True
+    )
 
     st.dataframe(
         df,

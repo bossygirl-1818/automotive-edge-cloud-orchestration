@@ -593,3 +593,44 @@ li[role="option"]:hover {
     font-weight: 900;
     margin-top: 12px;
 }
+.js-plotly-plot,
+.plot-container,
+.stPlotlyChart {
+    border-radius: 20px !important;
+    overflow: hidden !important;
+}
+.sumo-title{
+    font-size:38px;
+    font-weight:700;
+    color:white;
+    margin-bottom:20px;
+}
+
+/* Plotly / chart polish */
+.graph-card {
+    background: #020617;
+    border-radius: 22px;
+    border: 1px solid rgba(56,189,248,0.25);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.45);
+    padding: 22px;
+    margin-bottom: 28px;
+    overflow: hidden;
+}
+
+.stPlotlyChart {
+    background: #020617 !important;
+    border-radius: 20px !important;
+    overflow: hidden !important;
+}
+
+.js-plotly-plot,
+.plot-container {
+    border-radius: 20px !important;
+    overflow: hidden !important;
+}
+
+.section-title {
+    color: #ffffff !important;
+    font-size: 32px !important;
+    font-weight: 900 !important;
+}

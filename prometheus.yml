@@ -5,3 +5,12 @@ scrape_configs:
   - job_name: "automotive_orchestrator"
     static_configs:
       - targets: ["localhost:8000"]
+
+  - job_name: "sumo_orchestrator"
+    static_configs:
+      - targets: ["localhost:8001"]
+
+  - job_name: 'advanced_traffic'
+
+    static_configs:
+      - targets: ['localhost:8002']    

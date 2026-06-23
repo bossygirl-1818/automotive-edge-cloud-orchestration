@@ -45,16 +45,39 @@ def render_fleet_dashboard():
         decision_counts,
         names="Decision",
         values="Count",
-        hole=0.55,
-        title="Fleet Offloading Distribution"
+        hole=0.58,
+        color="Decision",
+        color_discrete_map={
+            "EDGE": "#38bdf8",
+            "VEHICLE": "#22c55e",
+            "CLOUD": "#f97316"
+        }
+    )
+
+    fig1.update_traces(
+        textposition="inside",
+        textinfo="percent+label",
+        textfont=dict(color="white", size=16),
+        marker=dict(line=dict(color="#020617", width=4))
     )
 
     fig1.update_layout(
         template="plotly_dark",
         paper_bgcolor="#020617",
         plot_bgcolor="#020617",
-        font=dict(color="#ffffff"),
-        height=420
+        font=dict(color="#ffffff", size=15),
+        height=430,
+        showlegend=False,
+        margin=dict(l=20, r=20, t=20, b=20),
+        annotations=[
+            dict(
+                text=f"{total_tasks}<br>Tasks",
+                x=0.5,
+                y=0.5,
+                font=dict(size=22, color="#38bdf8"),
+                showarrow=False
+            )
+        ]
     )
 
     st.plotly_chart(fig1, use_container_width=True)
@@ -76,12 +99,12 @@ def render_fleet_dashboard():
         template="plotly_dark",
         paper_bgcolor="#020617",
         plot_bgcolor="#020617",
-        font=dict(color="#ffffff"),
-        height=420
+        font=dict(color="#ffffff", size=15),
+        height=430
     )
 
-    fig2.update_xaxes(title="Vehicle ID")
-    fig2.update_yaxes(title="Average Completion Time")
+    fig2.update_xaxes(title="Vehicle ID", color="white")
+    fig2.update_yaxes(title="Average Completion Time", color="white")
 
     st.plotly_chart(fig2, use_container_width=True)
 

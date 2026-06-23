@@ -32,6 +32,9 @@ from components.database_status import render_database_status
 from components.database_analytics import render_database_analytics
 from components.digital_twin_dashboard import render_digital_twin_dashboard
 from components.fleet_dashboard import render_fleet_dashboard
+from components.sumo_dashboard import render_sumo_dashboard
+from components.sumo_traffic_dashboard import render_sumo_traffic_dashboard
+from components.advanced_traffic_dashboard import render_advanced_traffic_dashboard
 from components.db_decision_history import render_db_decision_history
 from components.pdf_report import render_pdf_report
 
@@ -169,6 +172,8 @@ render_offloading_distribution()
 # 14. Digital Twin + Fleet Simulation
 render_digital_twin_dashboard()
 render_fleet_dashboard()
+render_sumo_dashboard()
+render_sumo_traffic_dashboard()
 
 # 15. Extra Graphs + History
 render_graph_tabs()
@@ -179,6 +184,7 @@ render_system_report()
 render_executive_summary()
 render_database_status()
 render_database_analytics()
+render_advanced_traffic_dashboard()
 render_db_decision_history()
 render_pdf_report()
 

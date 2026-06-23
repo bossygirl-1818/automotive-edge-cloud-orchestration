@@ -1,0 +1,12 @@
+<configuration>
+    <input>
+        <net-file value="advanced_network_generated.net.xml"/>
+        <route-files value="advanced_routes.rou.xml"/>
+    </input>
+
+    <time>
+        <begin value="0"/>
+        <end value="10000"/>
+        <step-length value="1"/>
+    </time>
+</configuration>

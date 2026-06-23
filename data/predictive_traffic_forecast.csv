@@ -1,0 +1,2 @@
+avg_recent_speed,avg_recent_edge_cpu,avg_recent_cloud_latency,avg_recent_battery,avg_recent_active_vehicles,predicted_congestion_score,predicted_congestion_level,predicted_edge_load,predicted_edge_risk,predicted_cloud_latency,predicted_cloud_risk,predicted_battery_drain,predicted_battery_risk
+13.75,47.98,76.49,53.17,24.1,80.25,HIGH,62.44,MEDIUM,101.47,MEDIUM,46.83,MEDIUM

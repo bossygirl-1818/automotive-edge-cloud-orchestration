@@ -38,6 +38,7 @@ from components.advanced_traffic_dashboard import render_advanced_traffic_dashbo
 from components.digital_twin_layer_dashboard import render_digital_twin_layer_dashboard
 from components.db_decision_history import render_db_decision_history
 from components.traffic_rl_dashboard import render_traffic_rl_dashboard
+from components.predictive_traffic_dashboard import render_predictive_traffic_dashboard
 from components.pdf_report import render_pdf_report
 
 
@@ -189,6 +190,7 @@ render_database_analytics()
 render_advanced_traffic_dashboard()
 render_traffic_rl_dashboard()
 render_digital_twin_layer_dashboard()
+render_predictive_traffic_dashboard()
 render_db_decision_history()
 render_pdf_report()
 

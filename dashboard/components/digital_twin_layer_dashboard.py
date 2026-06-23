@@ -45,23 +45,71 @@ def render_digital_twin_layer_dashboard():
     health_counts = df["vehicle_health_status"].value_counts().reset_index()
     health_counts.columns = ["Health Status", "Count"]
 
+    total_health = health_counts["Count"].sum()
+
     fig1 = px.pie(
         health_counts,
         names="Health Status",
         values="Count",
         hole=0.58,
-        title="Vehicle Health Distribution"
+        color="Health Status",
+        color_discrete_map={
+            "NORMAL": "#22c55e",
+            "WARNING": "#facc15",
+            "CRITICAL": "#ef4444"
+        }
+    )
+
+    fig1.update_traces(
+        textposition="inside",
+        textinfo="percent+label",
+        textfont=dict(
+            color="white",
+            size=16
+        ),
+        marker=dict(
+            line=dict(
+                color="#020617",
+                width=4
+            )
+        )
     )
 
     fig1.update_layout(
         template="plotly_dark",
         paper_bgcolor="#020617",
         plot_bgcolor="#020617",
-        font=dict(color="#ffffff", size=15),
-        height=430
+        font=dict(
+            color="#ffffff",
+            size=15
+        ),
+        height=430,
+        showlegend=False,
+        margin=dict(
+            l=20,
+            r=20,
+            t=20,
+            b=20
+        ),
+        annotations=[
+            dict(
+                text=f"{total_health}<br>States",
+                x=0.5,
+                y=0.5,
+                font=dict(
+                    size=22,
+                    color="#38bdf8"
+                ),
+                showarrow=False
+            )
+        ]
     )
 
-    st.plotly_chart(fig1, use_container_width=True)
+    # Render pie chart once
+    st.plotly_chart(
+        fig1,
+        use_container_width=True
+    )
 
     congestion_counts = df["congestion_level"].value_counts().reset_index()
     congestion_counts.columns = ["Congestion Level", "Count"]

@@ -1,35 +1,35 @@
 {
-    "timestamp": "2026-06-23 18:28:03",
+    "timestamp": "2026-06-24 16:35:08",
     "vehicle_twin": {
-        "vehicle_id": "vehicle_15",
-        "speed": 21.28,
-        "battery": 33.7,
-        "cpu_usage": 29.8,
-        "task_queue": 13,
-        "health_status": "CRITICAL"
+        "vehicle_id": "vehicle_10",
+        "speed": 21.47,
+        "battery": 28.95,
+        "cpu_usage": 39.83,
+        "task_queue": 8,
+        "health_status": "WARNING"
     },
     "road_twin": {
         "intersection_id": "advanced_sumo_junction_01",
-        "traffic_density": "LOW",
+        "traffic_density": "HIGH",
         "signal_state": "EW_GREEN",
-        "active_vehicles": 35,
-        "average_speed": 7.11,
-        "congestion_level": "MODERATE"
+        "active_vehicles": 40,
+        "average_speed": 10.9,
+        "congestion_level": "CONGESTED"
     },
     "edge_twin": {
         "edge_server_id": "edge_node_01",
-        "cpu_load": 54.71,
-        "memory_usage": 40.92,
-        "active_tasks": 28,
-        "latency_ms": 37.13,
-        "status": "NORMAL"
+        "cpu_load": 23.53,
+        "memory_usage": 85.11,
+        "active_tasks": 79,
+        "latency_ms": 21.95,
+        "status": "DEGRADED"
     },
     "cloud_twin": {
         "cloud_region": "cloud_region_01",
-        "cpu_load": 46.48,
-        "memory_usage": 44.94,
-        "active_tasks": 63,
-        "latency_ms": 134.16,
+        "cpu_load": 69.25,
+        "memory_usage": 84.67,
+        "active_tasks": 39,
+        "latency_ms": 138.18,
         "status": "NORMAL"
     }
 }

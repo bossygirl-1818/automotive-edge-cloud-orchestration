@@ -1,0 +1,16 @@
+{
+    "timestamp": "2026-06-24 14:17:59",
+    "vehicle_id": "vehicle_15",
+    "rl_state": {
+        "traffic_density": "LOW",
+        "network_quality": "MODERATE",
+        "battery": 88.63,
+        "speed": 15.21,
+        "task_type": "obstacle_detection"
+    },
+    "decision": "VEHICLE",
+    "explanation": [
+        "Safety-critical task requires low-latency processing.",
+        "VEHICLE was selected to avoid network dependency and process locally."
+    ]
+}

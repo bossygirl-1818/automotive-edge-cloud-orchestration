@@ -1,0 +1,35 @@
+{
+    "timestamp": "2026-06-24 16:35:09",
+    "vehicle_id": "vehicle_10",
+    "rl_state": {
+        "traffic_density": "HIGH",
+        "network_quality": "MODERATE",
+        "battery": 28.95,
+        "speed": 21.47,
+        "task_type": "obstacle_detection"
+    },
+    "rl_decision": "VEHICLE",
+    "final_decision": "EDGE",
+    "adaptation_reason": "High predicted congestion detected; VEHICLE execution overridden to EDGE.",
+    "forecast": {
+        "avg_recent_speed": 13.75,
+        "avg_recent_edge_cpu": 47.98,
+        "avg_recent_cloud_latency": 76.49,
+        "avg_recent_battery": 53.17,
+        "avg_recent_active_vehicles": 24.1,
+        "predicted_congestion_score": 80.25,
+        "predicted_congestion_level": "HIGH",
+        "predicted_edge_load": 62.44,
+        "predicted_edge_risk": "MEDIUM",
+        "predicted_cloud_latency": 101.47,
+        "predicted_cloud_risk": "MEDIUM",
+        "predicted_battery_drain": 46.83,
+        "predicted_battery_risk": "MEDIUM"
+    },
+    "explanation": [
+        "High traffic density increases local congestion risk.",
+        "Vehicle battery is low, so local execution may be risky.",
+        "Safety-critical task requires low-latency processing.",
+        "EDGE was selected to reduce latency while avoiding vehicle overload."
+    ]
+}

@@ -10,6 +10,7 @@ RUN pip install --no-cache-dir -r requirements-prod.txt
 COPY . .
 
 ENV PYTHONPATH=/app
+ENV STREAMLIT_BROWSER_GATHER_USAGE_STATS=false
 
 EXPOSE 8501
 

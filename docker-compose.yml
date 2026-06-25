@@ -27,5 +27,10 @@ services:
       - "3001:3000"
     environment:
       - GF_FEATURE_TOGGLES_ENABLE=
+    volumes:
+      - grafana_data:/var/lib/grafana
     depends_on:
       - prometheus
+
+volumes:
+  grafana_data:

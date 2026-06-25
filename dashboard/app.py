@@ -353,26 +353,46 @@ def render_database_reports_page():
 
 def render_monitoring_links_page():
     st.markdown(
-        '<div class="section-title">📡 Monitoring Links</div>',
+        """
+        <div class="section-title">📡 Monitoring & Observability Links</div>
+        """,
         unsafe_allow_html=True
     )
 
-    st.markdown("""
-    <div class="graph-card">
-        <div class="graph-title">External Monitoring Stack</div>
-        <p style="color:#cbd5e1; font-size:16px; line-height:1.8;">
-        Grafana and Prometheus run as separate monitoring services.
-        Use this page during demos to quickly open live observability tools.
-        </p>
-    </div>
-    """, unsafe_allow_html=True)
+    # Highlighted native info container for maximum visibility
+    st.info("🔌 Live Monitoring Stack — Quick Access")
+    
+    with st.container():
+        st.markdown("**Use these highlighted links to verify real-time system observability:**")
+        
+        st.link_button(
+            "🔎 Prometheus Targets — Check All Services UP",
+            "http://localhost:9090/targets",
+            use_container_width=True,
+            type="primary"
+        )
+        
+        st.link_button(
+            "📈 Prometheus Metrics Explorer",
+            "http://localhost:9090/graph",
+            use_container_width=True
+        )
+        
+        st.link_button(
+            "📊 Grafana Automotive Edge-Cloud Dashboard",
+            "http://localhost:3001/d/adml52k/automotive-edge-cloud-orchestrator?orgId=1&from=now-6h&to=now&timezone=browser",
+            use_container_width=True
+        )
+
+    st.write("")
+    st.markdown("---")
 
     col1, col2 = st.columns(2)
 
     with col1:
         st.link_button(
             "Open Grafana Dashboard",
-            "http://localhost:3000"
+            "http://localhost:3001/d/adml52k/automotive-edge-cloud-orchestrator?orgId=1&from=now-6h&to=now&timezone=browser"
         )
 
         st.link_button(

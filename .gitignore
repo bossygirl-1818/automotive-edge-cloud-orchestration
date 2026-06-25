@@ -1,36 +1,95 @@
+# ==========================
+# Python
+# ==========================
 __pycache__/
-*.pyc
+*.py[cod]
+*$py.class
 *.pyo
 *.pyd
 
+# ==========================
+# Virtual Environments
+# ==========================
 .venv/
 venv/
 env/
 
+# ==========================
+# IDE
+# ==========================
+.vscode/
+.idea/
+
+# ==========================
+# Jupyter
+# ==========================
+.ipynb_checkpoints/
+
+# ==========================
+# Environment Variables
+# ==========================
+.env
+.env.*
+
+# ==========================
+# Logs & Temporary Files
+# ==========================
 *.log
 *.tmp
 *.bak
 
+# ==========================
+# Operating System Files
+# ==========================
 .DS_Store
 Thumbs.db
 
+# ==========================
+# SQLite / Database
+# ==========================
 *.db-journal
 *.sqlite-journal
 
+# Ignore local database (uncomment if you don't want to track it)
+# data/orchestrator.db
+
+# ==========================
+# Streamlit
+# ==========================
 .streamlit/secrets.toml
 
+# ==========================
+# Docker
+# ==========================
+docker-compose.override.yml
+
+# ==========================
+# Prometheus Runtime Data
+# ==========================
 prometheus-*/data/
+prometheus-*/wal/
+prometheus-*/chunks_head/
+
+# ==========================
+# Grafana Runtime Data
+# ==========================
+grafana/
 grafana-*/data/
 
-.ipynb_checkpoints/
+# ==========================
+# Python Cache
+# ==========================
+.pytest_cache/
+.mypy_cache/
 
-data/orchestrator.db
-
-prometheus-3.12.0.windows-amd64/
-grafana/
-
+# ==========================
+# Generated Runtime Files
+# ==========================
 *.db
+*.sqlite
 
-# Optional generated runtime artifacts
+# Optional generated artifacts
 # data/*_visualizations/
 # data/*.json
+# data/*.html
+# data/*.png

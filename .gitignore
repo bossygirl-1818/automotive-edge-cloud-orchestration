@@ -1,58 +1,36 @@
-# Python
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
 
-# Virtual Environment
+.venv/
 venv/
-.env
+env/
 
-# IDE
-.vscode/
-.idea/
+*.log
+*.tmp
+*.bak
 
-# Streamlit Cache
-.streamlit/
-
-# OS Files
 .DS_Store
 Thumbs.db
 
-# Generated Reports
-Automotive_Report.pdf
+*.db-journal
+*.sqlite-journal
 
-# Generated Visualizations
-data/*.png
-data/*.html
+.streamlit/secrets.toml
 
-# Model Checkpoints (optional)
-# data/*.pth
-# data/*.pkl
+prometheus-*/data/
+grafana-*/data/
 
-# Logs
-*.log
+.ipynb_checkpoints/
 
-# Pytest Cache
-.pytest_cache/
+data/orchestrator.db
 
-# Coverage
-.coverage
-htmlcov/
-# Prometheus
 prometheus-3.12.0.windows-amd64/
+grafana/
 
-# Database
 *.db
 
-# Cache
-__pycache__/
-*.pyc
-
-# Virtual Environment
-venv/
-.env
-
-prometheus-3.12.0.windows-amd64/
-prometheus-3.12.0.windows-amd64/data/
-*.lock
+# Optional generated runtime artifacts
+# data/*_visualizations/
+# data/*.json

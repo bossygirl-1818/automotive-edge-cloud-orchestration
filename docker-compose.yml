@@ -1,16 +1,31 @@
 services:
+  streamlit:
+    build: .
+    container_name: automotive-streamlit
+    ports:
+      - "8501:8501"
+    volumes:
+      - .:/app
+    depends_on:
+      - prometheus
+
   prometheus:
     image: prom/prometheus
     container_name: automotive-prometheus
     ports:
       - "9090:9090"
     volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - type: bind
+        source: ./prometheus.yml
+        target: /etc/prometheus/prometheus.yml
+        read_only: true
 
   grafana:
     image: grafana/grafana
     container_name: automotive-grafana
     ports:
-      - "3000:3000"
+      - "3001:3000"
+    environment:
+      - GF_FEATURE_TOGGLES_ENABLE=
     depends_on:
       - prometheus

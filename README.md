@@ -212,7 +212,7 @@ automotive-edge-cloud-orchestration/
 | Deep Learning | PyTorch (DQN) |
 | Dashboard | Streamlit |
 | Visualization | Plotly, Matplotlib |
-| Traffic Simulation | SUMO, TraCI, SimPy |
+| Traffic Simulation | SUMO, TraCI |
 | Monitoring | Prometheus, Grafana |
 | Deployment | Docker, Docker Compose |
 | Database | SQLite |
